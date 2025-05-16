@@ -1,0 +1,18 @@
+<section class="home-section-brands">
+    <div class="title-sections">
+        <h2>Marcas Destacadas</h2>
+    </div>
+
+    <div class="carousel basic">
+        <div class="group" *ngFor="let image of images">
+            <div class="card-imgs">
+                <img [src]="image" alt="Prueba">
+            </div>
+        </div>
+        <div aria-hidden class="group" *ngFor="let image of images">
+            <div class="card-imgs">
+                <img [src]="image" alt="Prueba">
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,31 @@
+<section class="contact-form-section">
+  <form (ngSubmit)="submitContactForm()">
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Nombres / Representante" [(ngModel)]="newContactForm.names" name="names" required>
+      <input type="text" class="form-control" placeholder="Apellidos / Representante" [(ngModel)]="newContactForm.lastname" name="lastname" required>
+      <input type="text" class="form-control" placeholder="Razón Social Empresa" [(ngModel)]="newContactForm.social_reason" name="social_reason">
+      <input type="email" class="form-control" placeholder="Email" [(ngModel)]="newContactForm.email" name="email" required>
+
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="DNI / RUC" [(ngModel)]="newContactForm.dniRuc" name="dniRuc" required>
+        <input type="text" class="form-control" placeholder="N° Celular" [(ngModel)]="newContactForm.telephone" name="telephone" required>
+      </div>
+
+      <textarea name="message" class="form-control" placeholder="Mensaje" [(ngModel)]="newContactForm.message"></textarea>
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="newContactForm.is_agree" id="invalidCheck" name="is_agree" required>
+        <label class="form-check-label" for="invalidCheck">
+          He leído y estoy de acuerdo con los términos y condiciones de la web.
+        </label>
+        <div class="invalid-feedback">
+          Debes aceptar los términos antes de enviar.
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button class="btn btn-primary" type="submit">Enviar</button>
+      </div>
+    </div>
+  </form>
+</section>

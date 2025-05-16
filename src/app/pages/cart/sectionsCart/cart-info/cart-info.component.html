@@ -1,0 +1,33 @@
+<div class="carrito-contenido" *ngIf="cart.cartItems?.length > 0; else carritoVacio">
+    <div class="productos">
+        <div class="producto" *ngFor="let cartItem of cart.cartItems">
+            <img [src]="cartItem.product?.productImg" class="producto-imagen" alt="Imagen del producto">
+            <div class="producto-info">
+                <h2 class="producto-nombre">{{ cartItem.product?.productName }}</h2>
+                <p class="producto-precio">S/. {{ cartItem.product?.productPrice?.toFixed(2) }}</p>
+            </div>
+            <div class="producto-cantidad">
+                <button (click)="updateQuantity(cartItem, 1)">+</button>
+                <span>{{ cartItem.quantity }}</span>
+                <button (click)="updateQuantity(cartItem, -1)">-</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="resumen">
+        <h2>Resumen del Carrito</h2>
+        <p>Subtotal: S/. {{ cart.total?.toFixed(2) }}</p>
+        <p>Envío: <span class="envio">{{ cart.typeShipment }}</span></p>
+        <p class="total">Total: S/. {{ cart.total?.toFixed(2) }}</p>
+        <button pButton label="Finalizar Compra" class="boton-finalizar"></button>
+    </div>
+</div>
+
+
+<ng-template #carritoVacio>
+    <p class="mensaje-vacio carrito-vacio"> Tu carrito está vacío.</p>
+    <p> <i class="pi pi-shopping-cart carrito-vacio"></i></p>
+    <button class="carrito-boton">
+    <a class="" routerLink="/categories"> Ir a comprar</a>
+  </button>
+</ng-template>

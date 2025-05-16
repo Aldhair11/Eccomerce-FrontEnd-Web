@@ -1,0 +1,216 @@
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+}
+
+.input-search {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #48828d !important;
+    border-radius: 5px;
+}
+
+.search-products {
+    width: 60%;
+}
+
+.search-products input {
+    width: 100%;
+    height: 50px;
+}
+
+
+/* Contenedor de selects */
+
+.selects-containers {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filters-divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 50%;
+}
+
+
+/* Tabla responsiva */
+
+.table-container {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+::ng-deep .p-datatable {
+    width: 80%;
+    margin: auto;
+    max-width: 100%;
+}
+
+::ng-deep .p-datatable-thead>tr>th {
+    font-weight: bold;
+}
+
+
+/* Botones */
+
+.button-action {
+    padding: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+::ng-deep .p-button {
+    background: #48828d;
+    border-color: #48828d;
+}
+
+::ng-deep .p-button:hover {
+    background: #fff !important;
+    color: #48828d !important;
+    border-color: #48828d !important;
+}
+
+
+/* Labels */
+
+.label-view,
+.label-edit {
+    font-weight: bold;
+    color: #48828d;
+    font-size: 18px;
+}
+
+
+/* Inputs, Selects y Transiciones */
+
+.p-inputtext,
+p-inputNumber,
+p-dropdown {
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.p-inputtext:focus,
+p-inputNumber:focus,
+p-dropdown:focus {
+    border-color: #48828d;
+    box-shadow: 0 0 5px rgba(72, 130, 141, 0.5);
+}
+
+
+/* Diálogo */
+
+.p-dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+button.p-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+
+/* Botones secundarios */
+
+.p-button-text {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+}
+
+.p-button-text:hover {
+    color: #b52b27 !important;
+}
+
+.p-button-primary {
+    background-color: #48828d;
+    border: none;
+}
+
+.p-button-primary:hover {
+    background-color: #3a6a72;
+}
+
+
+/* Área de texto */
+
+.p-textarea {
+    border: 1px solid #48828d !important;
+}
+
+
+/* Botón de peligro */
+
+.p-button-danger {
+    color: red !important;
+}
+
+.p-button-danger:hover {
+    color: red !important;
+}
+
+
+/* Responsive */
+
+@media (max-width: 1200px) {
+     ::ng-deep .p-datatable {
+        width: 90%;
+    }
+    .filters-container {
+        margin-right: 0;
+        margin-top: 19em;
+    }
+}
+
+@media (max-width: 768px) {
+     ::ng-deep .p-datatable {
+        width: 100%;
+    }
+    .filters-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 19em;
+    }
+    .button-container {
+        justify-content: center;
+    }
+    .search-products,
+    .selects-containers,
+    .filters-divider {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .label-view,
+    .label-edit {
+        font-size: 14px;
+    }
+     ::ng-deep .p-datatable {
+        font-size: 12px;
+    }
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+}

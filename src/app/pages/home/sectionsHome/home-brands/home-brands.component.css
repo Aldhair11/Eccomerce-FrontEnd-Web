@@ -1,0 +1,70 @@
+.title-sections {
+    text-align: center;
+    color: #48828d;
+    font-family: "Red Hat Display", serif;
+    h2 {
+        font-size: 36px;
+        font-weight: bold;
+    }
+}
+
+.carousel {
+    margin: 0 auto;
+    padding: 20px 0;
+    width: 80%;
+    overflow: hidden;
+    display: flex;
+    white-space: nowrap;
+    position: relative;
+}
+
+.carousel .group {
+    display: flex;
+    animation: scroll 100s linear infinite;
+}
+
+.carousel:hover .group {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-2000%);
+    }
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-right: 20px;
+    will-change: transform;
+    flex-shrink: 0;
+    animation: scrolling 10s linear infinite;
+}
+
+.card-imgs {
+    width: 100%;
+    color: white;
+    border-radius: 24px;
+    padding: 20px;
+    font-size: xx-large;
+    justify-content: center;
+    align-items: center;
+    img {
+        width: 200px;
+        object-fit: contain;
+    }
+}
+
+@keyframes scrolling {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}

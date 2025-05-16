@@ -1,0 +1,353 @@
+<div class="flex flex-wrap gap-4 mb-4 filters-container">
+    <div class="search-products">
+        <input type="text" [(ngModel)]="filtersProducts.searchTerms" (input)="loadProducts(0, rows)" placeholder="Buscar producto..." class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+    <div class="selects-containers">
+        <p-dropdown [(ngModel)]="filtersProducts.brandId" (onChange)="applyFilters()" [options]="brands" optionLabel="name" optionValue="id" placeholder="Seleccionar marca" class="w-1/4" filter="true">
+        </p-dropdown>
+
+        <p-dropdown [(ngModel)]="filtersProducts.categoryId" (onChange)="applyFilters()" [options]="categories" optionLabel="categoryName" optionValue="id" placeholder="Seleccionar categoría" class="w-1/4" filter="">
+        </p-dropdown>
+
+        <p-inputNumber [(ngModel)]="filtersProducts.minPrice" (onInput)="loadProducts(0, rows)" mode="decimal" placeholder="Precio mínimo" class="w-1/4">
+        </p-inputNumber>
+
+        <p-inputNumber [(ngModel)]="filtersProducts.maxPrice" (onInput)="loadProducts(0, rows)" mode="decimal" placeholder="Precio máximo" class="w-1/4">
+        </p-inputNumber>
+
+        <p-inputNumber [(ngModel)]="filtersProducts.stock" (onInput)="loadProducts(0, rows)" placeholder="Stock" class="w-1/4">
+        </p-inputNumber>
+
+        <p-dropdown [(ngModel)]="filtersProducts.isOffer" (onChange)="loadProducts(0, rows)" [options]="[{label: 'Sí', value: true},
+    {label: 'Sin Oferta', value: false}]" placeholder="Oferta" class="w-1/4">
+        </p-dropdown>
+
+        <p-dropdown [(ngModel)]="filtersProducts.isActive" (onChange)="loadProducts(0, rows)" [options]="[{label: 'Activo', value: true}, {label: 'Inactivo', value: false}]" placeholder="Estado" class="w-1/4"></p-dropdown>
+    </div>
+    <div class="button-container">
+        <button pButton type="button" (click)="resetFilters()" label="Restablecer Filtros" class="p-button-secondary"></button>
+        <button pButton type="button" (click)="addProduct()" label="Agregar Producto" class="p-button-primary"></button>
+    </div>
+</div>
+
+<p-table [value]="products" class="table-container" [tableStyle]="{ 'min-width': '60rem' }">
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <span class="text-xl font-bold label-view">Productos :</span>
+        </div>
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th>Nombre</th>
+            <th>Imagen</th>
+            <th>Precio</th>
+            <th>Categoria</th>
+            <th>Marcas</th>
+            <th>Stock</th>
+            <th>Oferta</th>
+            <th>Estado</th>
+            <th>Atributos</th>
+            <th>Caracteristicas</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-product>
+        <tr>
+            <td>{{ product.productName }}</td>
+            <td>
+                <img [src]="product.productImg" [alt]="product.productName" class="w-24 rounded imagen-product" />
+            </td>
+            <td>{{ product.productPrice | currency: 'S/.' }}</td>
+            <td>{{ product.categoryName }}</td>
+            <td>{{ product.brandName }}</td>
+            <td>
+                <p-tag [value]="product.stock" [severity]="getSeverity(product.stock)" />
+            </td>
+            <td>{{ product.priceOffer ? 'S/.' + product.priceOffer : 'Sin Oferta' }}</td>
+            <td>
+                <i class="pi" [ngClass]="{'pi-check-circle text-green-500': product.isActive, 'pi-times-circle text-red-500': !product.isActive}"></i>
+            </td>
+            <td>
+                <p-button icon="pi pi-list" pRipple class="button-action" (click)="showAttributes(product)"></p-button>
+            </td>
+            <td>
+                <p-button icon="pi pi-list" pRipple class="button-action" (click)="showCharacteristics(product)"></p-button>
+            </td>
+            <td>
+                <p-button icon="pi pi-dollar" pRipple class="button-action" (click)="editProductOffer(product)"></p-button>
+                <p-button icon="pi pi-pencil" pRipple class="button-action" (click)="editProduct(product)"></p-button>
+                <p-button icon="pi pi-trash" pRipple class="button-action" (click)="deactivateProduct(product)"></p-button>
+                <p-button icon="pi pi-eye" pRipple class="button-action" (click)="viewProduct(product)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template #footer> In total there are {{ products ? products.length : 0 }} products. </ng-template>
+</p-table>
+
+<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[8, 16, 24]" />
+
+<p-dialog [(visible)]="attributesDialog" header="Atributos" [style]="{ width: '30rem' }">
+    <ul *ngIf="selectedAttributes.length > 0; else noAttributes">
+        <li *ngFor="let attribute of selectedAttributes">
+            {{ attribute.attributeName }}
+        </li>
+    </ul>
+    <ng-template #noAttributes>
+        <p>No hay atributos disponibles.</p>
+    </ng-template>
+    <div class="flex justify-end mt-4 buttons-container">
+        <p-button label="Cerrar" severity="secondary" (click)="attributesDialog = false"></p-button>
+        <p-button label="Agregar Atributo" severity="secondary" (click)="addAttribute()"></p-button>
+
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="characteristicsDialog" header="Caracteristicas" [style]="{ width: '30rem' }">
+    <ul *ngIf="selectedCharacteristics.length > 0; else noCharacteristics">
+        <li *ngFor="let characteristic of selectedCharacteristics">
+            {{ characteristic.name }}
+        </li>
+    </ul>
+    <ng-template #noCharacteristics>
+        <p>No hay Caracteristicas disponibles.</p>
+    </ng-template>
+    <div class="flex justify-end mt-4 buttons-container">
+        <p-button label="Agregar Caracteristica" severity="secondary" (click)="addCharacteristic()"></p-button>
+        <p-button label="Cerrar" severity="secondary" (click)="characteristicsDialog = false"></p-button>
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="addCharacteristicDialog" header="Agregar Caracteristica" [style]="{ width: '50vw', maxWidht: '600px',overflow: 'hidden !important' }">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="addCharacteristicName">Nombre</label>
+            <input id="addCharacteristicName" pInputText [(ngModel)]="addCharacteristicContent.name" />
+        </div>
+
+        <div class="p-field">
+            <label for="addCharacteristicDescription">Descripción</label>
+            <textarea id="addCharacteristicDescription" pInputTextarea [(ngModel)]="addCharacteristicContent.description"></textarea>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="addCharacteristicDialog = false"></button
+      >&nbsp;
+
+    <button pButton type="button" label="Agregar Otra" class="p-button-secondary" (click)="saveCharacteristic()"></button>
+        <button pButton type="button" label="Enviar Todo" class="p-button-primary" (click)="sendSingleCharacteristic()"></button>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="addAttributeDialog" header="Agregar Atributo" [style]="{ width: '50vw', maxWidht: '600px',overflow: 'hidden !important' }">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="addAtributeName">Nombre</label>
+            <input id="addAtributeName" pInputText [(ngModel)]="addAttributeContent.attributeName" />
+        </div>
+
+        <div class="p-field">
+            <label for="addSubCategory">Subcategoria</label>
+            <p-dropdown id="addSubCategory" [(ngModel)]="addAttributeContent.subCategories" [options]="subcategories" optionLabel="categoryName" optionValue="id" placeholder="Seleccionar Subcategoria"></p-dropdown>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="addAttributeDialog = false"></button
+      >&nbsp;
+
+    <button pButton type="button" label="Agregar Otra" class="p-button-secondary" (click)="saveAttribute()"></button>
+        <button pButton type="button" label="Enviar Todo" class="p-button-primary" (click)="sendSingleAttribute()"></button>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="addDialog" [modal]="true" header="Agregar Producto" [style]="{ width: '50vw', maxWidht: '600px',overflow: 'hidden !important' }">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="addProductName">Nombre</label>
+            <input id="addProductName" pInputText [(ngModel)]="addProductContent.productName" />
+        </div>
+
+        <div class="p-field">
+            <label for="addDescription">Descripción</label>
+            <textarea id="addDescription" pInputTextarea [(ngModel)]="addProductContent.productDescription"></textarea>
+        </div>
+
+        <div class="p-field">
+            <label for="addBrand">Marca</label>
+            <p-dropdown id="addBrand" [(ngModel)]="addProductContent.brand" [options]="brands" optionLabel="name" optionValue="id" placeholder="Seleccionar Marca"></p-dropdown>
+        </div>
+
+        <div class="p-field">
+            <label for="addCategory">Categoría</label>
+            <p-dropdown id="addCategory" [(ngModel)]="addProductContent.category" [options]="categories" optionLabel="categoryName" optionValue="id" placeholder="Seleccionar Categoría"></p-dropdown>
+        </div>
+
+        <div class="p-field">
+            <label for="addSku">SKU</label>
+            <input id="addSku" pInputText [(ngModel)]="addProductContent.sku" />
+        </div>
+
+        <div class="p-field">
+            <label for="addPrice">Precio</label>
+            <p-inputNumber id="addPrice" [(ngModel)]="addProductContent.price"></p-inputNumber>
+        </div>
+
+        <div class="p-field">
+            <label for="addQuantity">Cantidad</label>
+            <p-inputNumber id="addQuantity" [(ngModel)]="addProductContent.quantity"></p-inputNumber>
+        </div>
+
+        <div class="p-field">
+            <label for="addStock">Stock</label>
+            <p-inputNumber id="addStock" [(ngModel)]="addProductContent.stock"></p-inputNumber>
+        </div>
+
+        <div class="p-field">
+            <label for="addImage">Imagen</label>
+            <input id="addImage" pInputText [(ngModel)]="addProductContent.product_image" />
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="addDialog = false"></button>&nbsp;
+
+        <button pButton type="button" label="Guardar" icon="pi pi-check" class="p-button-primary" style="margin-right: 30px;" (click)="saveProduct()"></button>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Crear Oferta" [(visible)]="offerDialog" [style]="{ width: '30rem' }">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <label for="offerDescount" class="font-semibold w-28 label-edit">Porcentaje de Descuento </label>
+            <input pInputText id="offerDescount" class="flex-auto" type="number" [(ngModel)]="editProductOfferContent.offerDescount" autocomplete="off" />
+        </div>
+    </div>
+    <div class="flex justify-end gap-2 mt-4 button-container">
+        <p-button label="Guardar" (click)="updatedProductOffer()" />
+        <p-button label="Cancelar" severity="secondary" (click)="offerDialog = false" />
+    </div>
+</p-dialog>
+
+<p-dialog header="Editar Producto" [(visible)]="visibleDialog" [style]="{ width: '30rem' }">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <label for="productName" class="font-semibold w-28 label-edit">Nombre </label>
+            <input pInputText id="productName" class="flex-auto" [(ngModel)]="editProductContent.productName" autocomplete="off" />
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label for="productDescription" class="font-semibold w-28 label-edit">Descripcion</label>
+            <input pInputText id="productDescription" class="flex-auto" [(ngModel)]="editProductContent.productDescription" autocomplete="off" />
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label for="productSku" class="font-semibold w-28 label-edit">SKU</label>
+            <input pInputText id="productSku" class="flex-auto" [(ngModel)]="editProductContent.sku" autocomplete="off" />
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label for="productPrice" class="font-semibold w-28 label-edit">Precio</label>
+            <input pInputText id="productPrice" class="flex-auto" type="number" [(ngModel)]="editProductContent.price" autocomplete="off" />
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label for="quantity" class="font-semibold w-28 label-edit">Cantidad</label>
+            <input pInputText id="quantity" class="flex-auto" type="number" [(ngModel)]="editProductContent.quantity" autocomplete="off" />
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label for="stock" class="font-semibold w-28 label-edit">Stock</label>
+            <input pInputText id="stock" class="flex-auto" type="number" [(ngModel)]="editProductContent.stock" autocomplete="off" />
+        </div>
+
+        <div style="margin-top: 10px;" class="flex items-center gap-4">
+            <label for="category" class="font-semibold w-28 label-edit">Categoria:</label>&nbsp;
+            <p-dropdown id="category" class="flex-auto" [options]="categories" optionLabel="categoryName" optionValue="idCategory" [(ngModel)]="editProductContent.category" placeholder="Seleccione la categoria">
+            </p-dropdown>
+        </div>
+
+        <div style="margin-top: 10px;" class="flex items-center gap-4">
+            <label for="brand" class="font-semibold w-28 label-edit">Marca:</label>&nbsp;
+            <p-dropdown id="brand" class="flex-auto" [options]="brands" optionLabel="name" optionValue="idBrand" [(ngModel)]="editProductContent.brand" placeholder="Seleccione la marca">
+            </p-dropdown>
+        </div>
+
+        <div style="margin-top: 10px;" class="flex items-center gap-4">
+            <label for="productImg" class="font-semibold w-28 label-edit">URL Imagen</label>
+            <input pInputText id="productImg" class="flex-auto" [(ngModel)]="editProductContent.product_image" autocomplete="off" />
+        </div>
+    </div>
+
+    <div class="flex justify-end gap-2 mt-4 button-container">
+        <p-button label="Guardar" (click)="updatedProduct()" />
+        <p-button label="Cancelar" severity="secondary" (click)="visibleDialog = false" />
+    </div>
+</p-dialog>
+
+
+<p-dialog [(visible)]="deactivateDialog" header="Confirmar Desactivación" [style]="{ width: '25rem' }">
+    <p>¿Estás seguro de que deseas desactivar este producto?</p>
+    <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Cancelar" severity="secondary" (click)="deactivateDialog = false"></p-button>&nbsp;
+        <p-button label="Eliminar" severity="danger" (click)="deleteProduct()"></p-button>
+    </div>
+</p-dialog>
+
+<p-dialog header="Detalles de Productos:" [(visible)]="viewDialog" [style]="{ width: '30rem' }">
+
+
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Nombre : </label>&nbsp;
+            <span class="flex-auto">{{ selectedProduct?.productName }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Descripcion : </label>&nbsp;
+            <span class="flex-auto">{{ selectedProduct?.productDescription }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">SKU : </label>&nbsp;
+            <span class="flex-auto">{{ selectedProduct?.productSku }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Precio : </label>&nbsp;
+            <span class="flex-auto">{{ selectedProduct?.productPrice | currency }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Cantidad :</label>&nbsp;
+            <span class="flex-auto">{{ selectedProduct?.quantity }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Stock :</label>&nbsp;
+            <span class="flex-auto">{{ selectedProduct?.stock }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Categoria :</label>&nbsp;
+            <span class="flex-auto">{{ selectedProduct?.categoryName }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Marca :</label>&nbsp;
+            <span class="flex-auto">{{ selectedProduct?.brandName }}</span>&nbsp;
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">URL Imagen :</label>&nbsp;
+            <span class="flex-auto text-blue-500 break-words">{{ selectedProduct?.productImg }}</span>
+        </div>
+
+        <div class="flex justify-center mt-4">
+            <img *ngIf="selectedProduct?.productImg" [src]="selectedProduct?.productImg" alt="Product Image" class="w-32 h-32 object-cover rounded-lg shadow-md">
+        </div>
+    </div>
+</p-dialog>

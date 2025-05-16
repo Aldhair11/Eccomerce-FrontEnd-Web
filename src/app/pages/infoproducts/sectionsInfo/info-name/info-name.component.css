@@ -1,0 +1,154 @@
+div {
+    font-family: "Red Hat Display", serif;
+}
+
+.productos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.p-bradcrumb-custom {
+    width: 80%;
+    margin: auto;
+}
+
+.producto-container {
+    display: flex;
+    width: 80%;
+    margin: auto;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fff;
+    gap: 20px;
+}
+
+.productos-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.productos-image img {
+    width: 50%;
+    height: auto;
+    margin-left: 20px;
+    object-fit: contain;
+}
+
+.productos-detalles {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.productos-titulo {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.producto-descripcion {
+    font-size: 20px;
+}
+
+.productos-precio {
+    font-size: 25px;
+    font-weight: bold;
+    color: #48828d;
+    margin-bottom: 10px;
+}
+
+.productos-precio p {
+    color: #979797;
+    font-size: 10px;
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.precio span {
+    margin-bottom: 10px;
+}
+
+.tarjeta-precio {
+    color: #999;
+}
+
+.productos-sku {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.estado {
+    color: green;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.productos-marca img {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.productos-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.carrito {
+    background: #48828d;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+}
+
+.cantidad-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cantidad-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cantidad-container input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.cantidad-container button {
+    width: 30px;
+    height: 30px;
+    background: #48828d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.carrito:hover {
+    background: rgb(1, 71, 71);
+    color: white;
+}
+
+@media(max-width: 768px) {
+    .producto-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    ::ng-deep .p-breadcrumb-item-label {
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+    }
+}

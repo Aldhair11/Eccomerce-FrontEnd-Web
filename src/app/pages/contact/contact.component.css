@@ -1,0 +1,30 @@
+.contact-section {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    font-family: "Red Hat Display", serif;
+    width: 80%;
+    margin: auto;
+    align-items: center;
+}
+
+app-contact-info {
+    width: 50%;
+}
+
+app-contact-form {
+    width: 50%;
+}
+
+@media (max-width: 1170px) {
+    .contact-section {
+        margin-top: 250px;
+        flex-direction: column;
+    }
+    app-contact-info {
+        width: 100%;
+    }
+    app-contact-form {
+        width: 100%;
+    }
+}

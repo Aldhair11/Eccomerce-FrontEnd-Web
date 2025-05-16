@@ -1,0 +1,68 @@
+<nav style="padding: 0px;" class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="main-layout">
+        <header class="header">
+            <div class="header-navbar">
+                <div class="header-content">
+                    <div class="header-img" [routerLink]="['/home']">
+                        <a routerLink="/home">
+                            <img src="https://i.imgur.com/EcOPZMu.jpg" alt="Logo Empresa" class="header-logo">
+                        </a>
+                        <h1 class="header-title">Empresa</h1>
+                    </div>
+                    <button class="hamburger" (click)="toggleMenu()">&#9776;</button>
+                </div>
+                <p-autoComplete class="search-input" [(ngModel)]="filters.searchTerms" [suggestions]="filteredProducts" (completeMethod)="search($event)" (onSelect)="goToProduct($event.value)" field="productName" placeholder="Buscar Producto">
+                    <ng-template let-product pTemplate="item">
+                        <div class="product-item">
+                            <img [src]="product.imageUrl" alt="{{ product.productName }}" class="product-img">
+                            <div class="product-info">
+                                <span class="product-category">{{ product.category }}</span>
+                                <span class="product-name">{{ product.productName }}</span>
+                            </div>
+                            <div class="product-price">
+                                {{ product.price | currency:'S/.' }}
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-autoComplete>
+
+              <div class="iconos-container">
+                <ng-container *ngIf="isLoggedIn; else loginIcon">
+                  <p-avatar
+                    [label]="userInitial"
+                    styleClass="mr-2"
+                    size="xlarge"
+                    shape="circle"
+                    (click)="handleAvatarClick($event)"
+                    class="avatar-container"
+                  />
+
+                  <p-confirmPopup #confirmPopup></p-confirmPopup>
+                </ng-container>
+
+                <ng-template #loginIcon>
+                  <a href="#" (click)="openLoginModal(); $event.preventDefault();" class="me-3">
+                    <i class="pi pi-user"></i>
+                  </a>
+                </ng-template>
+
+                <a href="/cart">
+                  <i class="pi pi-shopping-bag"></i>
+                </a>
+              </div>
+
+            </div>
+
+            <div class="navegation" [ngClass]="{'open': menuOpen}">
+                <div class="container">
+                    <ul class="nav nav-pills  py-3">
+                        <li class="nav-item" *ngFor="let item of menuItems">
+                            <a class="nav-link text-white" [routerLink]="item.link" routerLinkActive="active" (click)="cerrarMenu()">{{ item.label }}</a
+                            >
+                          </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+</nav>

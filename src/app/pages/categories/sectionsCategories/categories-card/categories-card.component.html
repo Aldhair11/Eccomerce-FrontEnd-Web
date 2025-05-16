@@ -1,0 +1,29 @@
+<div class="categorias-container">
+    <div>
+        <h2 class="titulo">
+            Categorias de Empresa
+        </h2>
+    </div>
+
+    <h3 class="subtitulo">
+        Escoga una categoria
+    </h3>
+
+  <div class="categorias-grid">
+    <div class="categorias-card" *ngFor="let category of categories">
+      <a [routerLink]="['/', category.label, 'products']">
+        <img [src]="category.image" alt="{{ category.label }}">
+        <p>{{ category.label }}</p>
+      </a>
+    </div>
+  </div>
+
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="first"
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[8, 16, 24]"
+  />
+
+</div>

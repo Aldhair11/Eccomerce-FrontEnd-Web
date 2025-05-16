@@ -1,0 +1,18 @@
+<section class="faq-section">
+    <div class="faq-title">
+        <h2>Conoce algunas de nuestras Preguntas más Frecuentes</h2>
+    </div>
+
+    <div class="faq-questions">
+        <p-accordion [value]="0">
+            @for (tab of tabs; track tab.title) {
+            <p-accordion-panel [value]="tab.value">
+                <p-accordion-header>{{ tab.title }}</p-accordion-header>
+                <p-accordion-content>
+                    <p class="m-0">{{ tab.content }}</p>
+                </p-accordion-content>
+            </p-accordion-panel>
+            }
+        </p-accordion>
+    </div>
+</section>

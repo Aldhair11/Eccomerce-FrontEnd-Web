@@ -1,0 +1,189 @@
+                                    /* You can add global styles to this file, and also import other style files */
+                                    
+                                    @import "primeicons/primeicons.css";
+                                    html,
+                                    body {
+                                        height: 100%;
+                                    }
+                                    
+                                    body {
+                                        margin: 0;
+                                        font-family: "Red Hat Display", serif;
+                                    }
+                                    
+                                    .p-carousel-indicator-active .p-carousel-indicator-button {
+                                        background-color: #48828d !important;
+                                    }
+                                    
+                                    .p-carousel-indicator .p-carousel-indicator-button {
+                                        background-color: #000;
+                                        width: 10px;
+                                        height: 10px;
+                                        border-radius: 50%;
+                                    }
+                                    
+                                    .p-tab-active {
+                                        background: var(--p-tabs-tab-active-background) !important;
+                                        border-color: #48828d !important;
+                                        color: #48828d !important;
+                                    }
+                                    
+                                    .p-tablist-active-bar {
+                                        z-index: 1;
+                                        display: block;
+                                        position: absolute;
+                                        bottom: var(--p-tabs-active-bar-bottom);
+                                        height: var(--p-tabs-active-bar-height);
+                                        background: #48828d !important;
+                                        transition: 250mscubic-bezier(0.35, 0, 0.25, 1);
+                                    }
+                                    
+                                    .p-inputtext:enabled:focus {
+                                        border-color: #48828d !important;
+                                    }
+                                    
+                                    .p-button.p-button-outlined {
+                                        box-shadow: none !important;
+                                        outline: none !important;
+                                        background: transparent !important;
+                                        border: none !important;
+                                    }
+                                    
+                                    .text-primary {
+                                        --bs-text-opacity: 1;
+                                        color: #48828d!important;
+                                        margin: 30px;
+                                        font-size: 25px;
+                                        font-weight: bold;
+                                    }
+                                    
+                                    .p-avatar {
+                                        color: #48828d !important;
+                                    }
+                                    
+                                    p-toast {
+                                        z-index: 9999 !important;
+                                    }
+                                    
+                                    p-toast .p-toast-message {
+                                        background-color: #F0EEEE!important;
+                                        color: #48828d!important;
+                                        border-radius: 8px;
+                                        border: 1px solid #374151;
+                                        padding: 16px;
+                                        font-size: 20px;
+                                    }
+                                    
+                                    p-toast .p-toast-message .p-toast-summary {
+                                        font-size: 18px;
+                                        font-weight: bold;
+                                        color: #10b981;
+                                    }
+                                    
+                                    p-toast .p-toast-message .p-toast-content {
+                                        font-size: 16px;
+                                    }
+                                    
+                                    .p-button-success {
+                                        background-color: #48828d !important;
+                                        border: 1px solid #000 !important;
+                                        color: #fff!important;
+                                        font-weight: bold !important;
+                                        font-size: 15px;
+                                    }
+                                    
+                                    .p-button-success:hover {
+                                        background-color: #fff !important;
+                                        border: 1px solid #000 !important;
+                                        color: #48828d!important;
+                                        font-weight: bold !important;
+                                        font-size: 15px;
+                                    }
+                                    
+                                    .p-button {
+                                        background: #48828d !important;
+                                        border: 1px solid #48828d !important;
+                                    }
+                                    
+                                    .p-button:hover {
+                                        background: #fff !important;
+                                        border: 1px solid #48828d !important;
+                                        color: #48828d !important;
+                                    }
+                                    
+                                    .p-button-text.p-button-secondary {
+                                        background: #48828d !important;
+                                        border-color: transparent;
+                                        color: #48828d;
+                                    }
+                                    
+                                    .p-button-text.p-button-secondary:hover {
+                                        background: #fff!important;
+                                        border-color: transparent;
+                                        color: #48828d !important;
+                                    }
+                                    
+                                    .p-button-secondary {
+                                        background: #48828d !important;
+                                        border: 1px solid var(--p-button-secondary-border-color);
+                                        color: #fff!important;
+                                    }
+                                    
+                                    .p-select-dropdown {
+                                        color: #48828d !important;
+                                    }
+                                    
+                                    .p-inputtext {
+                                        border: 1px solid #48828d !important;
+                                    }
+                                    
+                                    .p-select {
+                                        border: 1px solid #48828d !important;
+                                    }
+                                    
+                                    .p-button-danger {
+                                        color: #fff!important;
+                                    }
+                                    
+                                    .p-button-outlined {
+                                        color: #48828d !important;
+                                    }
+                                    
+                                    .p-select-label {
+                                        align-content: center !important;
+                                    }
+                                    
+                                    .p-ripple {
+                                        margin-top: 5px !important;
+                                    }
+                                    
+                                    .p-paginator {
+                                        margin-top: 2em !important;
+                                        margin-bottom: 2em !important;
+                                    }
+                                    
+                                    .p-paginator-page.p-paginator-page-selected {
+                                        color: #48828d !important;
+                                    }
+                                    
+                                    .p-dialog-content {
+                                        overflow-y: scroll !important;
+                                    }
+                                    
+                                    @media (max-width: 1200px) {
+                                        .p-dialog {
+                                            width: 90% !important;
+                                        }
+                                    }
+                                    
+                                    @media (max-width: 768px) {
+                                        .p-dialog {
+                                            width: 90% !important;
+                                        }
+                                    }
+                                    
+                                    @media (max-width: 480px) {
+                                        .p-dialog {
+                                            width: 90% !important;
+                                        }
+                                    }

@@ -1,0 +1,7 @@
+@media (max-width: 1200px) {
+    main {
+        margin-top: 250px;
+    }
+}
+
+@import "primeicons/primeicons.css";

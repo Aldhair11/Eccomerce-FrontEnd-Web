@@ -1,0 +1,46 @@
+.contact-form-section {
+    width: 100%;
+    padding: 50px;
+}
+
+.mb-3 {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.form-control {
+    height: 60px;
+}
+
+.input-group {
+    gap: 50px;
+}
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    button {
+        width: 40%;
+        font-weight: bold;
+        background: #48828d !important;
+        border: 2px solid #48828d;
+    }
+    button:hover {
+        background: #fff !important;
+        color: #48828d;
+        border: 2px solid #48828d;
+    }
+}
+
+.form-check {
+    label {
+        color: #757575;
+        font-weight: 200;
+    }
+    .form-check-input:checked {
+        background-color: #48828d !important;
+        border-color: #48828d !important;
+    }
+}

@@ -1,0 +1,10 @@
+<app-header (openLogin)="openLoginModal()" (openUserDrawer)="openUserModal()" />
+<br>
+<main>
+    <router-outlet />
+</main>
+
+<app-footer/>
+
+<app-login-modal *ngIf="showLoginModal" (closeModal)="closeLoginModal()"></app-login-modal>
+<app-users-modal [visible]="isUserModalOpen" (close)="isUserModalOpen = false"></app-users-modal>

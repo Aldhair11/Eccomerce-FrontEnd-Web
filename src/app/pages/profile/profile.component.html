@@ -1,0 +1,200 @@
+<div class="container-principal">
+
+    <p-card class="perfil">
+        <ng-template #header>
+            <div class="avatar">{{ userInitial }}</div>
+        </ng-template>
+
+        <div class="flex items-center justify-between pb-2 border-b title-content">
+            <h2 class="text-lg font-semibold">Mi Perfil</h2>
+            <div class="right-content">
+                <span class="text-gray-500 text-sm">{{ selectedUser?.username }}</span>
+                <span class="text-gray-500 text-sm">{{ selectedUser?.dni }}</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 mt-3 info-content">
+            <span class="value-view">{{ selectedUser?.fullName }}</span>
+            <span class="value-view">{{ selectedUser?.phoneNumber }}</span>
+            <span class="value-view">{{ selectedUser?.email }}</span>
+            <span class="value-view">{{ selectedUser?.birthDate | date:'dd/MM/yyyy' }}</span>
+        </div>
+
+        <div class="flex justify-center mt-3">
+            <span class="text-lg font-bold status-container" [ngClass]="{'text-green-600': selectedUser?.isActive, 'text-red-600': !selectedUser?.isActive}">
+            {{ selectedUser?.isActive ? 'Activo' : 'Inactivo' }}
+            <i class="pi icon-status" [ngClass]="{'pi-check-circle text-green-500': selectedUser?.isActive, 'pi-times-circle text-red-500': !selectedUser?.isActive}"></i>
+        </span>
+        </div>
+
+        <ng-template #footer>
+            <div class="flex gap-2 mt-3">
+                <p-button label="Ver Informacion" class="w-full bg-blue-600 text-white " (click)="viewInfo(selectedUser)" />
+            </div>
+        </ng-template>
+    </p-card>
+
+    <div class="carrito-contenido">
+        <div *ngIf="cartItems.length > 0; else carritoVacio">
+            <div class="productos">
+                <div class="titulo-boton ">
+                    <p class="titulo font-bold text-lg">Productos Añadidos: </p>
+                    <p-button label="Ir a Carrito" class="w-full bg-blue-600 text-white " [routerLink]="'/cart'" />
+                </div>
+                <div class="producto" *ngFor="let product of cartItems">
+                    <img [src]="product.imageUrl" class="producto-imagen" alt="Imagen del producto">
+                    <div class="producto-info">
+                        <h2 class="producto-nombre">{{ product.name }}</h2>
+                        <p class="producto-precio">S/. {{product.price?.toFixed(2)}}</p>
+                        <p class="producto-cantidad">Cantidad: {{ product.quantity }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #carritoVacio>
+            <p class="carrito-vacio-mensaje">Tu carrito está vacío. ¡Agrega productos para comenzar!</p>
+        </ng-template>
+
+        <div class="direcciones">
+            <div class="titulo-boton ">
+                <p class="titulo font-bold text-lg">Direcciones Registradas:</p>
+                <p-button label="Agregar Direccion" (click)="addAddress()" class=" boton w-full bg-blue-600 text-white" />
+            </div>
+            <ul *ngIf="selectedUser.addresses.length > 0; else noAddresses" class="address-list">
+                <li *ngFor="let address of selectedUser.addresses" class="address-item">
+                    <div class="address-info">
+                        <p class="font-semibold">
+                            📍 {{ address.streetName }} {{ address.streetNumber }}, {{ address.districtsName }}, {{ address.provinceName }}
+                        </p>
+                        <p class="text-sm text-gray-600 state-country">
+                            {{ address.stateName }}, {{ address.countryName }}
+                        </p>
+                    </div>
+                    <p-button icon="pi pi-trash" pRipple class="button-action"></p-button>
+                </li>
+            </ul>
+
+            <ng-template #noAddresses>
+                <p>No hay direcciones registradas.</p>
+                <p-button label="Agregar" (click)="addAddress()" class="w-full bg-blue-600 text-white" />
+            </ng-template>
+        </div>
+
+    </div>
+</div>
+
+<p-dialog [(visible)]="addAddressDialog" [modal]="true" header="Agregar Dirección" [style]="{ width: '50vw', maxWidth: '600px', overflow: 'hidden !important' }">
+
+    <div class="p-fluid">
+
+        <div class="p-field">
+            <label for="addCountry">País</label>
+            <p-dropdown id="addCountry" [(ngModel)]="addAddressContent.country" [options]="countries" optionLabel="name" optionValue="id" placeholder="Seleccionar País" (onChange)="onCountryChange($event.value)">
+            </p-dropdown>
+        </div>
+
+        <div class="p-field">
+            <label for="addState">Estado</label>
+            <p-dropdown id="addState" [(ngModel)]="addAddressContent.state" [options]="states" optionLabel="name" optionValue="id" placeholder="Seleccionar Estado" (onChange)="onStateChange($event.value)">
+            </p-dropdown>
+        </div>
+
+        <div class="p-field">
+            <label for="addProvince">Provincia</label>
+            <p-dropdown id="addProvince" [(ngModel)]="addAddressContent.province" [options]="provinces" optionLabel="name" optionValue="id" placeholder="Seleccionar Provincia" (onChange)="onProvinceChange($event.value)">
+            </p-dropdown>
+        </div>
+
+        <div class="p-field">
+            <label for="addDistrict">Distrito</label>
+            <p-dropdown id="addDistrict" [(ngModel)]="addAddressContent.district" [options]="districts" optionLabel="name" optionValue="id" placeholder="Seleccionar Distrito">
+            </p-dropdown>
+        </div>
+        <div class="p-field">
+            <label for="addStreetName">Nombre de la Calle</label>
+            <input id="addStreetName" pInputText [(ngModel)]="addAddressContent.street_name" />
+        </div>
+
+        <div class="p-field">
+            <label for="addStreetNumber">Número de la Calle</label>
+            <input id="addStreetNumber" pInputText [(ngModel)]="addAddressContent.street_number" />
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="addAddressDialog = false">
+    </button> &nbsp;
+        <button pButton type="button" label="Agregar Otra" class="p-button-secondary" (click)="saveAddress()">
+    </button>
+        <button pButton type="button" label="Enviar Todo" class="p-button-primary" (click)="sendSingleAddress()">
+    </button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Detalles de Usuario:" [(visible)]="viewDialog" [style]="{ width: '30rem' }">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Nombre Completo : </label>&nbsp;
+            <span class="flex-auto">{{ selectedUser?.fullName }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Razón Social : </label>&nbsp;
+            <span class="flex-auto">{{ selectedUser?.socialReason }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">DNI : </label>&nbsp;
+            <span class="flex-auto">{{ selectedUser?.dni }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Email :</label>&nbsp;
+            <span class="flex-auto">{{ selectedUser?.email }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Telefono :</label>&nbsp;
+            <span class="flex-auto">{{ selectedUser?.phoneNumber }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Fecha de Nacimiento :</label>&nbsp;
+            <span class="flex-auto text-blue-500 break-words">{{ selectedUser?.birthDate }}</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Username : </label>&nbsp;
+            <span class="flex-auto">{{ selectedUser?.username }}</span>
+        </div>
+        <p-button label="Editar Informacion" pRipple class="button-action" (click)="editUser(selectedUser)"></p-button>
+    </div>
+</p-dialog>
+
+<p-dialog header="Editar Usuario" [(visible)]="editDialog" [style]="{ width: '30rem' }">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <label for="username" class="font-semibold w-28 label-edit">Username </label>
+            <input pInputText id="username" class="flex-auto" [(ngModel)]="editUserContetn.username" autocomplete="off" />
+        </div>
+        <div class="flex items-center gap-4">
+            <label for="email" class="font-semibold w-28 label-edit">Email </label>
+            <input pInputText id="email" class="flex-auto" [(ngModel)]="editUserContetn.email" autocomplete="off" />
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label for="telephone" class="font-semibold w-28 label-edit">Telefono </label>
+            <input pInputText id="telephone" class="flex-auto" [(ngModel)]="editUserContetn.telephone" autocomplete="off" />
+        </div>
+        <div class="flex justify-end gap-2 mt-4 button-container">
+            <p-button label="Guardar" (click)="updatedUser()" />
+            <p-button label="Cancelar" severity="secondary" (click)="editDialog = false" />
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="deactivateDialog" header="Confirmar Eliminación" [style]="{ width: '25rem' }">
+    <p>¿Estás seguro de que deseas eliminar esta Direccion?</p>
+    <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Cancelar" severity="secondary" (click)="deactivateDialog = false"></p-button>&nbsp;
+        <p-button label="Eliminar" severity="danger" (click)="deleteAddress()"></p-button>
+    </div>
+</p-dialog>

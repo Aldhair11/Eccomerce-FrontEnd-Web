@@ -1,0 +1,75 @@
+<p-drawer [(visible)]="visible" [modal]="true" [position]="'left'" class="drawer-container">
+    <ng-template #headless>
+        <div class="flex flex-col h-full">
+            <div class="flex items-center justify-between px-6 pt-4 shrink-0">
+                <span class="inline-flex items-center gap-2">
+          <img src="https://i.imgur.com/EcOPZMu.jpg" alt="Logo Empresa" class="h-8 w-8">
+          <span class="font-semibold text-2xl text-primary">Empresa</span>
+                </span>
+                <span style="position: absolute; top: 10px;right: 10px">
+          <p-button type="button" (click)="visible = false" icon="pi pi-times" rounded="true" outlined="true" styleClass="h-8 w-8"></p-button>
+        </span>
+            </div>
+            <ul class="menu">
+                <li>
+                    <div class="menu-item" (click)="toggleMenu('home')">
+                        <i class="pi pi-home"></i>&nbsp; Home
+                    </div>
+                    <ul class="submenu" [ngClass]="{'active': activeMenu === 'home'}">
+                        <li><a href="/admin/dashboard"><i class="pi pi-chart-bar"></i>&nbsp; Dashboard</a></li>
+                        <li><a href="/admin/reports"><i class="pi pi-file"></i>&nbsp; Reportes - Auditoria</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="menu-item" (click)="toggleMenu('productos')">
+                        <i class="pi pi-box"></i>&nbsp; Productos
+                    </div>
+                    <ul class="submenu" [ngClass]="{'active': activeMenu === 'productos'}">
+                        <li><a href="admin/Categories"><i class="pi pi-tags"></i>&nbsp; Categorías</a></li>
+                        <li><a href="admin/Brands"><i class="pi pi-chart-line"></i>&nbsp; Marcas</a></li>
+                        <li><a href="admin/subcategories"><i class="pi pi-chart-line"></i>&nbsp; SubCategorias</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="menu-item" (click)="toggleMenu('contacto')">
+                        <i class="pi pi-phone"></i>&nbsp; Contacto
+                    </div>
+                    <ul class="submenu" [ngClass]="{'active': activeMenu === 'contacto'}">
+                        <li><a href="/admin/contacts"><i class="pi pi-envelope"></i>&nbsp; Contacto</a></li>
+
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="menu-item" (click)="toggleMenu('faq')">
+                        <i class="pi pi-question-circle"></i>&nbsp; FAQ
+                    </div>
+                    <ul class="submenu" [ngClass]="{'active': activeMenu === 'faq'}">
+                        <li><a href="admin/faq"><i class="pi pi-comments"></i>&nbsp; Preguntas y Respuestas</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <div class="menu-item" (click)="toggleMenu('config')">
+                        <i class="pi pi-cog"></i>&nbsp; Configuración
+                    </div>
+                    <ul class="submenu" [ngClass]="{'active': activeMenu === 'config'}">
+                        <li><a href="/admin/users"><i class="pi pi-shield"></i>&nbsp; Usuarios</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="container-boton">
+                <a class="button-miperfil" href="/profile">Mi Perfil</a>
+            </div>
+            <div class="container-boton">
+                <button class="button-cerrarsesion" (click)="logout()">
+                <i class="pi pi-sign-out mr-2"></i> Cerrar Sesión
+              </button>
+            </div>
+
+
+        </div>
+    </ng-template>
+</p-drawer>

@@ -1,0 +1,162 @@
+                    .home-section-brands {
+                        font-family: "Red Hat Display", serif;
+                        padding: 20px;
+                        width: 100%;
+                        margin: auto;
+                        background: #f0eeee;
+                    }
+                    
+                    .title-sections {
+                        color: #48828d;
+                        display: flex;
+                        justify-content: center;
+                    }
+                    
+                    .title-sections h2 {
+                        font-weight: bold;
+                        font-size: 36px;
+                    }
+                    
+                    .product-container {
+                        background: #fff;
+                        width: 90%;
+                        max-width: 300px;
+                        height: 550px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        padding: 10px;
+                    }
+                    
+                     ::ng-deep .p-carousel {
+                        width: 80%;
+                        margin: auto;
+                    }
+                    
+                    .product-header {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        flex-direction: row;
+                    }
+                    
+                    .category {
+                        h4 {
+                            font-weight: bold;
+                            text-decoration: underline;
+                            font-size: 22px;
+                        }
+                    }
+                    
+                    .product-image {
+                        width: 200px;
+                        height: 200px;
+                        object-fit: contain;
+                        border-radius: 8px;
+                    }
+                    
+                    .img-container {
+                        text-align: center;
+                    }
+                    
+                    .offer {
+                        background: #48828d;
+                        color: #fff;
+                        width: 25%;
+                        border-radius: 20px 0 0 20px;
+                        h4 {
+                            font-weight: bold;
+                            font-size: 18px;
+                            margin: auto;
+                            text-align: center;
+                            padding: 5px;
+                        }
+                    }
+                    
+                    .font-medium {
+                        text-align: center;
+                        font-weight: bold;
+                        font-size: 20px;
+                        margin-bottom: 10px !important;
+                    }
+                    
+                    .font-semibold {
+                        text-align: center;
+                        font-weight: bold;
+                        color: #48828d;
+                        font-size: 18px;
+                    }
+                    
+                    .product-name {
+                        font-size: clamp(0.8rem, 4vw, 1.2rem);
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 100%;
+                    }
+                    
+                    .price-offer {
+                        text-align: center;
+                        font-weight: 600;
+                        color: #979797;
+                        text-decoration: line-through;
+                        font-size: 14px;
+                    }
+                    
+                    .button-container {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                        align-items: center;
+                    }
+                    
+                     ::ng-deep .p-button {
+                        background: #fff !important;
+                        color: #48828d !important;
+                        width: 100% !important;
+                        border-color: #48828d !important;
+                        padding: 10px;
+                    }
+                    
+                     ::ng-deep .p-button:hover {
+                        background: #48828d !important;
+                        color: #fff !important;
+                    }
+                    
+                    .justify-between {
+                        text-align: center;
+                    }
+                    
+                    .names-container {
+                        gap: 10px;
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    
+                    .view-info {
+                        background: #48828d;
+                        color: white;
+                        border: 2px solid #48828d;
+                        padding: 8px 5px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: 0.3s;
+                        width: 100%;
+                        margin-top: 10px;
+                    }
+                    
+                    .view-info:hover {
+                        background: #fff;
+                        color: #48828d;
+                        font-weight: bold;
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .product-container {
+                            max-width: 250px;
+                            height: auto;
+                            display: grid;
+                            align-items: center;
+                        }
+                    }

@@ -1,0 +1,14 @@
+div {
+    font-family: "Red Hat Display", serif;
+}
+
+::ng-deep .p-tabs {
+    width: 80%;
+    margin: auto;
+}
+
+.pi-file-pdf {
+    font-size: 1.5rem !important;
+    color: #48848d !important;
+    display: inline-block !important;
+}

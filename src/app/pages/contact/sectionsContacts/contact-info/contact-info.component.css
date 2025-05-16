@@ -1,0 +1,51 @@
+    .contact-info-section {
+        width: 100%;
+        padding: 50px;
+        gap: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .contact-info-title {
+        color: #48828d;
+        h2 {
+            font-size: 80px;
+            font-weight: 500;
+        }
+    }
+    
+    .contact-info-lists {
+        h3 {
+            color: #48828d;
+            font-weight: 400;
+        }
+        ul {
+            a {
+                color: #757575;
+                text-decoration: none;
+                font-weight: 100;
+                font-size: 15px;
+            }
+            a:hover {
+                color: #252525;
+            }
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .contact-info-title h2 {
+            font-size: 50px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .contact-info-title h2 {
+            font-size: 40px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .contact-info-title h2 {
+            font-size: 30px;
+        }
+    }

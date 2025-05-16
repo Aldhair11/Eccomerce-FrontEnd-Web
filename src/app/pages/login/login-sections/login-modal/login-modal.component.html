@@ -1,0 +1,62 @@
+<div class="modal-overlay" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="close-button">
+            <button (click)="close()">
+        <i class="pi pi-times"></i>
+      </button>
+        </div>
+
+        <!-- Alternar entre Login y Registro -->
+        <h2 *ngIf="!isRegistering">Iniciar Sesión</h2>
+        <h2 *ngIf="isRegistering">Registro</h2>
+
+        <!-- Formulario de Login -->
+        <form *ngIf="!isRegistering" (ngSubmit)="onSubmit()">
+            <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username" placeholder="Username" required #passwordInput/>
+
+            <div class="password-container">
+                <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" name="password" [(ngModel)]="password" placeholder="Password" required />
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" class="password-toggle" (click)="togglePasswordVisibility()">
+              </i>
+            </div>
+
+            <div class="input-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="passwordRemember" [(ngModel)]="rememberPassword" (change)="saveRememberMe()" />
+                    <label class="form-check-label" for="passwordRemember">Recordar Contraseña</label>
+                </div>
+                <a href="/login/recover">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" [disabled]="isLoading">Iniciar Sesión</button>
+                <div class="register">
+                    <a (click)="toggleForm()">¿No tienes cuenta? Regístrate</a>
+                </div>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+        </form>
+
+        <!-- Formulario de Registro -->
+        <form *ngIf="isRegistering" (ngSubmit)="register()">
+            <input type="text" class="form-control" [(ngModel)]="user.names" name="names" placeholder="Nombres" required />
+            <input type="text" class="form-control" [(ngModel)]="user.lastnames" name="lastnames" placeholder="Apellidos" required />
+            <input type="text" class="form-control" [(ngModel)]="user.dni" name="dni" placeholder="DNI" required />
+            <input type="text" class="form-control" [(ngModel)]="user.socialReason" name="socialReason" placeholder="Razón Social" required />
+            <input type="text" class="form-control" [(ngModel)]="user.telephone" name="telephone" placeholder="Teléfono" required />
+            <input type="email" class="form-control" [(ngModel)]="user.email" name="email" placeholder="Correo Electrónico" required />
+            <input type="text" class="form-control" [(ngModel)]="user.username" name="username" placeholder="Username" required />
+            <input type="password" class="form-control" [(ngModel)]="user.password" name="password" placeholder="Password" required />
+            <input type="date" class="form-control" [(ngModel)]="user.birthDate" name="birthDate" required />
+
+            <div class="button-container">
+                <button type="submit" [disabled]="isLoading">Registrarse</button>
+                <div class="register">
+                    <a (click)="toggleForm()">¿Ya tienes cuenta? Inicia Sesión</a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

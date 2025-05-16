@@ -1,0 +1,32 @@
+<div class="audit-container">
+  <p class="audit-title">Escriba un usuario para ver sus reportes</p>
+  <p-autoComplete class="search-container"
+    [(ngModel)]="selectedUser"
+    [suggestions]="filteredUsers"
+    (completeMethod)="searchUser($event)"
+    (onSelect)="loadReports(selectedUser.id)"
+    field="name"
+    placeholder="Buscar usuario..."
+  ></p-autoComplete>
+
+  <div *ngIf="selectedUser" class="audit-info-container">
+    <div class="info-container">
+    <h3>Información del Usuario</h3>
+    <div class="info-content-data">
+        <div class="info-content">
+          <p><strong>Nombres Completos:</strong> {{ selectedUser.name }}</p>
+          <p><strong>Email:</strong> {{ selectedUser.email }}</p>
+          <p><strong>Usuario:</strong> {{ selectedUser.username }}</p>
+          <p><strong>DNI:</strong> {{ selectedUser.dni }}</p>
+        </div>
+        <div class="info-content">
+          <p><strong>Fecha de Nacimiento:</strong> {{ selectedUser.birthDate }}</p>
+          <p><strong>Telefono:</strong> {{ selectedUser.phoneNumber }}</p>
+          <p><strong>Role:</strong> {{ selectedUser.roleName }}</p>
+        </div>
+      </div>
+    </div>
+
+    <p-chart type="doughnut" [data]="chartData" [options]="chartOptions" class="w-full md:w-[30rem]" />
+  </div>
+</div>

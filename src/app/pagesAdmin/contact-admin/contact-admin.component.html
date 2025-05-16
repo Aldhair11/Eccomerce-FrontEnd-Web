@@ -1,0 +1,136 @@
+<div class="flex flex-wrap gap-4 mb-4 filters-container">
+    <div class="selects-containers">
+        <p-dropdown [(ngModel)]="filters.idStatus" (onChange)="applyFilters()" [options]="statuses" optionLabel="name" optionValue="id" placeholder="Seleccionar Estado" class="w-1/4" filter="true">
+        </p-dropdown>
+    </div>
+</div>
+
+<p-table [value]="contacts" class="table-container" [tableStyle]="{ 'min-width': '60rem' }">
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <span class="text-xl font-bold label-view">Contactos :</span>
+        </div>
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Razón Social</th>
+            <th>Dni/Ruc</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-contact>
+        <tr>
+            <td>{{ contact.namesContact }}</td>
+            <td>{{ contact.lastnameContact }}</td>
+            <td>{{ contact.socialreasonContact ? contact.socialreasonContact : 'Sin Razón Social' }}</td>
+            <td>{{ contact.dnirucContact }}</td>
+            <td>{{ contact.telephoneContact }}</td>
+            <td>{{ contact.emailContact }}</td>
+            <td>
+                <p-tag [value]="contact.statusContact" [severity]="getSeverity(contact.statusContact)" />
+            </td>
+            <td>
+                <p-button icon="pi pi-envelope" pRipple class="button-action" (click)="editContact(contact)"></p-button>
+                <p-button icon="pi pi-phone" pRipple class="button-action" (click)="editContactCall(contact)"></p-button>
+                <p-button icon="pi pi-eye" pRipple class="button-action" (click)="viewContact(contact)"></p-button>
+                <p-button icon="pi pi-trash" pRipple class="button-action" (click)="deactivateContact(contact)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template #footer> {{ contacts ? contacts.length : 0 }} contacto. </ng-template>
+</p-table>
+
+<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[8, 16, 24]" />
+
+<p-dialog [(visible)]="editDialog" [modal]="true" header="Respuesta: " [style]="{ width: '50vw' }">
+    <div class="p-fluid">
+        <div style="margin-bottom: 25px;" class="p-field">
+            <label class="label-view" for="editContactStatus">Estatus</label>&nbsp;
+            <input id="editContactStatus" [value]="statusMap[editContactContent.idStatus] || 'DESCONOCIDO'" readonly />
+        </div>
+
+        <div class="p-field">
+            <label class="label-view" for="editContactAnswer">Respuesta</label>&nbsp;
+            <textarea id="editContactAnswer" pInputTextarea [(ngModel)]="editContactContent.answer"></textarea>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="editDialog = false"></button>
+        <button pButton type="button" label="Guardar" icon="pi pi-check" class="p-button-primary" (click)="updatedContact()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="editDialogCall" header="Confirmar Desactivación" [style]="{ width: '25rem' }">
+    <p>¿Estás seguro de que deseas contactar por llamada?</p>
+    <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Cancelar" severity="secondary" (click)="editDialogCall = false"></p-button>&nbsp;
+        <p-button label="Estoy Seguro" severity="danger" (click)="updatedContactCall()"></p-button>
+    </div>
+</p-dialog>
+
+
+<p-dialog header="Detalles de Productos:" [(visible)]="viewDialog" [style]="{ width: '30rem' }">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Nombres : </label>&nbsp;
+            <span class="flex-auto">{{ selectedContact?.namesContact }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Apellidos : </label>&nbsp;
+            <span class="flex-auto">{{ selectedContact?.lastnameContact }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Razón Social : </label>&nbsp;
+            <span class="flex-auto">{{ selectedContact?.socialreasonContact }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">DNI/RUC : </label>&nbsp;
+            <span class="flex-auto">{{ selectedContact?.dnirucContact }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Email :</label>&nbsp;
+            <span class="flex-auto">{{ selectedContact?.emailContact }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Telefono :</label>&nbsp;
+            <span class="flex-auto">{{ selectedContact?.telephoneContact }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Estado de Contacto :</label>&nbsp;
+            <span class="flex-auto">{{ selectedContact?.statusContact }}</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Mensaje :</label>&nbsp;
+            <span class="flex-auto">{{ selectedContact?.messageContact }}</span>&nbsp;
+        </div>
+
+        <div class="flex items-center gap-4">
+            <label class="font-semibold w-28 label-view">Respuesta :</label>&nbsp;
+            <span class="flex-auto text-blue-500 break-words">{{ selectedContact?.answer }}</span>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="deactivateDialog" header="Confirmar Desactivación" [style]="{ width: '25rem' }">
+    <p>¿Estás seguro de que deseas desactivar este contacto? <strong>Indique su motivo de desactivación.</strong></p>
+    <div class="p-field desactivate-fields-container">
+        <label for="deactivateContact">Respuesta</label>
+        <textarea id="deactivateContact" pInputTextarea [(ngModel)]="selectedContact.answer"></textarea>
+    </div>
+    <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Cancelar" severity="secondary" (click)="deactivateDialog = false"></p-button>&nbsp;
+        <p-button label="Eliminar" severity="danger" (click)="deleteContact()"></p-button>
+    </div>
+</p-dialog>

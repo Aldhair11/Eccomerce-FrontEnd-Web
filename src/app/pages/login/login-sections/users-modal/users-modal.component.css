@@ -1,0 +1,94 @@
+::ng-deep .p-drawer {
+    padding: 20px;
+}
+
+.button-cerrarsesion {
+    padding: 12px 16px;
+    margin: 16px;
+    background-color: #48828d;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.button-cerrarsesion:hover {
+    background-color: #36656e;
+}
+
+.button-miperfil {
+    padding: 12px 16px;
+    margin: 16px;
+    background-color: #48828d;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+.a-miperfil {
+  color: #fff;
+  text-decoration: none;
+}
+
+.button-miperfil:hover {
+    background-color: #36656e;
+}
+
+.container-boton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #48828d;
+    transition: background 0.3s;
+    margin-top: 25px;
+}
+
+.menu-item:hover {
+    background-color: #48828d;
+    color: white;
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 20px;
+    display: none;
+}
+
+.submenu li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 8px;
+    transition: color 0.3s;
+}
+
+.submenu li a:hover {
+    color: #48828d;
+}
+
+.active {
+    display: block;
+}

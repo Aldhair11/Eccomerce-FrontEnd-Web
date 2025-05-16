@@ -1,0 +1,88 @@
+<div class="flex flex-wrap gap-4 mb-4 filters-container">
+    <div class="filters-divider">
+        <p-dropdown [(ngModel)]="filters.isActive" (onChange)="loadCategories(0, rows)" [options]="[{label: 'Activo', value: true}, {label: 'Inactivo', value: false}]" placeholder="Estado" class="w-1/4"></p-dropdown>
+    </div>
+    <div class="boton-agregar">
+        <button pButton type="button" (click)="addCategory()" label="Agregar Categoria" class="p-button-primary"></button>
+    </div>
+</div>
+
+<p-table [value]="categories" class="table-container" [tableStyle]="{ 'min-width': '60rem' }">
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <span class="text-xl font-bold label-view">Categorias</span>
+        </div>
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th>Nombre</th>
+            <th>Imagen</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-category>
+        <tr>
+            <td>{{ category.categoryName }}</td>
+            <td>
+                <img [src]="category.categoryImage" [alt]="category.categoryName" class="w-24 rounded imagen-category" />
+            </td>
+            <td>
+                <i class="pi" [ngClass]="{'pi-check-circle text-green-500': category.isActive, 'pi-times-circle text-red-500': !category.isActive}"></i>
+            </td>
+            <td>
+                <p-button icon="pi pi-pencil" pRipple class="button-action" (click)="editCategory(category)"></p-button>
+                <p-button icon="pi pi-trash" pRipple class="button-action" (click)="deactivateCategory(category)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[8, 16, 24]" />
+
+<p-dialog [(visible)]="addDialog" [modal]="true" header="Agregar Categoria" [style]="{ width: '50vw', maxWidht: '600px',overflow: 'hidden !important' }">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="addProductName">Nombre</label>
+            <input id="addProductName" pInputText [(ngModel)]="addCategoryContent.categoryName" />
+        </div>
+
+        <div class="p-field">
+            <label for="addImage">Imagen</label>
+            <input id="addImage" pInputText [(ngModel)]="addCategoryContent.categoryImage" />
+        </div>
+
+    </div>
+    <ng-template pTemplate="footer">
+
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="addDialog = false"></button>&nbsp;
+
+        <button pButton type="button" label="Guardar" icon="pi pi-check" class="p-button-primary" style="margin-right: 30px;" (click)="saveCategory()"></button>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Editar Categoria" [(visible)]="visibleDialog" [style]="{ width: '30rem' }">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <label for="categoryName" class="font-semibold w-28">Name</label>
+            <input pInputText id="categoryName" class="flex-auto" [(ngModel)]="selectedCategory.categoryName" autocomplete="off" />
+        </div>
+        <div class="flex items-center gap-4">
+            <label for="categoryImage" class="font-semibold w-28">Image</label>
+            <input pInputText id="categoryImage" class="flex-auto" [(ngModel)]="selectedCategory.categoryImage" autocomplete="off" />
+        </div>
+    </div>
+    <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Guardar" (click)="updateCategory()" />&nbsp;
+        <p-button label="Cancelar" severity="secondary" (click)="visibleDialog = false" />
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="deactivateDialog" header="Confirmar Desactivación" [style]="{ width: '25rem' }">
+    <p>¿Estás seguro de que deseas desactivar esta Categoria?</p>
+    <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Cancelar" severity="secondary" (click)="deactivateDialog = false"></p-button>&nbsp;
+        <p-button label="Eliminar" severity="danger" (click)="deleteCategory()"></p-button>
+    </div>
+</p-dialog>

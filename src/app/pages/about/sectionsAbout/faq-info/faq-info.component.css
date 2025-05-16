@@ -1,0 +1,161 @@
+                section {
+                    font-family: "Red Hat Display", serif;
+                }
+                
+                div {
+                    font-family: "Red Hat Display", serif;
+                }
+                
+                .nosotros-historia {
+                    padding: 40px;
+                    width: 80%;
+                    margin: auto;
+                    max-width: 100%;
+                    text-align: left;
+                    box-sizing: border-box;
+                }
+                
+                .nosotros-historia h2 {
+                    color: #48828d;
+                    font-size: 40px;
+                    font-weight: 800;
+                    margin-bottom: 15px;
+                    /*text-decoration: underline;*/
+                }
+                
+                .nosotros-historia p {
+                    font-size: 18px;
+                    line-height: 1.5;
+                    width: 100%;
+                }
+                
+                .mision-vision-container {
+                    display: flex;
+                    justify-content: center;
+                    gap: 20em;
+                    padding: 40px;
+                    margin: auto;
+                    width: 80%;
+                }
+                
+                .mision,
+                .vision {
+                    width: 50%;
+                    text-align: center;
+                }
+                
+                .mision h3,
+                .vision h3 {
+                    color: #48828d;
+                    font-size: 40px;
+                    font-weight: 800;
+                    /*text-decoration: underline;*/
+                    margin-bottom: 15px;
+                }
+                
+                .mision p,
+                .vision p {
+                    font-size: 18px;
+                    line-height: 1.5;
+                    text-align: left;
+                }
+                
+                .valores-container {
+                    padding: 40px;
+                    width: 80%;
+                    margin: auto;
+                    max-width: 100%;
+                    text-align: left;
+                    box-sizing: border-box;
+                }
+                
+                .valores-container h2 {
+                    color: #48828d;
+                    font-size: 40px;
+                    font-weight: 800;
+                    margin-bottom: 15px;
+                    /*text-decoration: underline;*/
+                }
+                
+                .beneficios-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: wrap;
+                    padding: 60px 70px;
+                    gap: 0px;
+                    font-family: "Red Hat Display", serif;
+                }
+                
+                .beneficio {
+                    text-align: center;
+                    width: 150px;
+                    color: black;
+                    flex: 1;
+                    min-width: 120px;
+                }
+                
+                .beneficio i {
+                    font-size: 40px;
+                    color: black;
+                    background-color: #fff;
+                    border-radius: 50%;
+                    padding: 20px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    width: 80px;
+                    height: 80px;
+                    margin: 0 auto;
+                    justify-content: center;
+                    align-items: center;
+                    display: flex;
+                    transition: transform 0.3sease;
+                }
+                
+                .beneficio p {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-top: 10px;
+                    color: #48828d;
+                }
+                
+                .separator {
+                    width: 1px;
+                    height: 100px;
+                    background-color: #48828d;
+                }
+                
+                @media(max-width: 768px) {
+                    .beneficios-container {
+                        flex-direction: column;
+                        text-align: center;
+                        gap: 20px;
+                    }
+                    .separator {
+                        display: none;
+                    }
+                    .beneficio {
+                        width: 100%;
+                    }
+                }
+                
+                @media (max-width: 768px) {
+                    .mision-vision-container {
+                        flex-direction: column;
+                        text-align: center;
+                        gap: 20px;
+                        display: flex;
+                        align-items: center;
+                        width: 100%
+                    }
+                    .mision p,
+                    .vision p {
+                        font-size: 18px;
+                        line-height: 1.5;
+                    }
+                }
+                
+                @media (max-width: 768px) {
+                    .valores-container {
+                        text-align: center;
+                    }
+                }

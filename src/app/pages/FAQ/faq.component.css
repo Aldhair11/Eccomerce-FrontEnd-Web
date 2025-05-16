@@ -1,0 +1,31 @@
+.faq-section {
+    width: 90%;
+    margin: auto;
+    flex-direction: column;
+    padding: 50px;
+    font-family: "Red Hat Display", serif;
+}
+
+.faq-title {
+    font-size: 64px;
+    color: #48828D;
+    h2 {
+        font-weight: 800;
+    }
+}
+
+::ng-deep .p-accordionheader {
+    color: #000 !important;
+    font-weight: bold !important;
+    font-size: 24px !important;
+}
+
+:ng-deep .p-accordioncontent {
+    font-size: 18px !important;
+}
+
+@media (max-width: 1024px) {
+    .faq-section {
+        margin-top: 250px;
+    }
+}

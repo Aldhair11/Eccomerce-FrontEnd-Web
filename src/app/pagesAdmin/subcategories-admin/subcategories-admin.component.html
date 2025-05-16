@@ -1,0 +1,98 @@
+<div class="flex flex-wrap gap-4 mb-4 filters-container">
+    <div class="filters-divider">
+        <p-dropdown [(ngModel)]="filters.isActive" (onChange)="loadSubCategory(0, rows)" [options]="[{label: 'Activo', value: true}, {label: 'Inactivo', value: false}]" placeholder="Estado" class="w-1/4"></p-dropdown>
+    </div>
+    <div class="boton-agregar">
+        <button pButton type="button" (click)="addSubCategory()" label="Agregar SubCategoria" class="p-button-primary"></button>
+    </div>
+</div>
+
+<p-table [value]="subcategories" class="table-container" [tableStyle]="{ 'min-width': '60rem' }">
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <span class="text-xl font-bold label-view ">SubCategorias:</span>
+
+        </div>
+    </ng-template>
+    <ng-template #header>
+        <tr>
+
+            <th>SubCategoria</th>
+            <th>Atributos</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-subcategory>
+        <tr>
+
+            <td>{{ subcategory.subCategoryName }}</td>
+            <td>
+                <p-button icon="pi pi-list" pRipple class="button-action" (click)="showAttributes(subcategory)"></p-button>
+            </td>
+            <td>
+                <i class="pi" [ngClass]="{'pi-check-circle text-green-500': subcategory.isActive, 'pi-times-circle text-red-500': !subcategory.isActive}"></i>
+            </td>
+            <td>
+
+                <p-button icon="pi pi-pencil" pRipple class="button-action" (click)="editSubCategory(subcategory)"></p-button>
+                <p-button icon="pi pi-trash" pRipple class="button-action" (click)="deactivateSubCategory(subcategory)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="totalRecords" [rowsPerPageOptions]="[8, 16, 24]" />
+
+<p-dialog [(visible)]="attributesDialog" header="Atributos" [style]="{ width: '30rem' }">
+    <ul *ngIf="attributes.length > 0; else noAttributes">
+        <li *ngFor="let attribute of attributes">
+            {{ attribute.attributeName }}
+        </li>
+    </ul>
+    <ng-template #noAttributes>
+        <p>No hay atributos disponibles.</p>
+    </ng-template>
+    <div class="flex justify-end mt-4">
+        <p-button label="Cerrar" severity="secondary" (click)="attributesDialog = false"></p-button>
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="addDialog" [modal]="true" header="Agregar SubCategoria" [style]="{ width: '50vw', maxWidht: '600px',overflow: 'hidden !important' }">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="addProductName">Nombre de la SubCategoria</label>
+            <input id="addProductName" pInputText [(ngModel)]="addSubcategoryContent.subCategoryName" />
+        </div>
+
+
+    </div>
+    <ng-template pTemplate="footer">
+
+        <button pButton type="button" label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="addDialog = false"></button>&nbsp;
+
+        <button pButton type="button" label="Guardar" icon="pi pi-check" class="p-button-primary" style="margin-right: 30px;" (click)="saveSubCategory()"></button>
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Editar Sub Categoria" [(visible)]="visibleDialog" [style]="{ width: '30rem' }">
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+            <label for="questionFaq" class="font-semibold w-28">SubCategoria</label>
+            <input pInputText id="questionFaq" class="flex-auto" [(ngModel)]="editSubCategories.subCategoryName " autocomplete="off" />
+        </div>
+    </div>
+    <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Cancelar" severity="secondary" class="p-button-text" (click)="visibleDialog = false"></p-button>&nbsp;
+        <p-button label="Guardar" class="p-button-primary" (click)="updateSubCategory()"></p-button>
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="deactivateDialog" header="Confirmar Desactivación" [style]="{ width: '25rem' }">
+    <p>¿Estás seguro de que deseas desactivar esta SubCategoria?</p>
+    <div class="flex justify-end gap-2 mt-4">
+        <p-button label="Desactivar" class="p-button-primary" (click)="deleteSubCategory()"></p-button>&nbsp;
+        <p-button label="Cancelar" severity="secondary" (click)="deactivateDialog = false"></p-button>
+    </div>
+</p-dialog>

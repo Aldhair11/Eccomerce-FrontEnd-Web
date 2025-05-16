@@ -1,0 +1,86 @@
+.boletin-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #f0eeee;
+    padding: 40px 40px;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.boletin-text {
+    max-width: 50%;
+}
+
+.title {
+    font-size: 55px;
+    font-weight: bold;
+    color: #48828d;
+}
+
+p {
+    color: #333;
+    font-size: 32px;
+}
+
+.suscribete {
+    color: #48828d;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 32px;
+}
+
+.suscribete:hover {
+    text-decoration: underline;
+}
+
+.boletin-form {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 0px solid #48828d;
+    width: 100%;
+    max-width: 500px;
+    min-width: 300px;
+}
+
+.boletin-form input {
+    border: none;
+    padding: 15px 20px;
+    font-size: 25px;
+    flex: 1;
+    outline: none;
+    min-width: 50px;
+}
+
+.boletin-form button {
+    background: #48828d;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0 50px 50px 0;
+    white-space: nowrap;
+}
+
+.boletin-form button:hover {
+    background: #48828d;
+}
+
+@media (max-width: 768px) {
+    .boletin-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    .boletin-text {
+        max-width: 100%;
+    }
+    .boletin-form {
+        width: 100%;
+    }
+}
